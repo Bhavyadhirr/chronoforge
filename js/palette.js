@@ -3,13 +3,13 @@
 ------------------------------------------------------- */
 
 const NAV_ITEMS = [
-    { name: "Home", url: "/index.html" },
-    { name: "Research", url: "/research/index.html" },
-    { name: "Projects", url: "/projects/index.html" },
-    { name: "Media", url: "/media/index.html" },
-    { name: "About", url: "/about/index.html" },
-    { name: "Contact", url: "/contact/index.html" },
-    { name: "MARK-B.L.U.", url: "/research/mark-blu.html" }
+    { name: "Home", url: "index.html" },
+    { name: "Research", url: "research/index.html" },
+    { name: "Projects", url: "projects/index.html" },
+    { name: "Media", url: "media/index.html" },
+    { name: "About", url: "about/index.html" },
+    { name: "Contact", url: "contact/index.html" },
+    { name: "MARK-B.L.U.", url: "research/mark-blu.html" }
 ];
 
 (function () {

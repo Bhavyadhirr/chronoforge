@@ -5,8 +5,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     /* Load Components */
-    await loadComponent("#header-placeholder", "/components/header.html");
-    await loadComponent("#footer-placeholder", "/components/footer.html");
+    await loadComponent("#header-placeholder", "components/header.html");
+    await loadComponent("#footer-placeholder", "components/footer.html");
 
     /* Initialize Theme Toggle */
     const themeToggle = document.getElementById("theme-toggle");
