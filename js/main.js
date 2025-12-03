@@ -29,11 +29,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     /* Initialize Hero (Three.js & Shader Canvases) */
-    if (document.getElementById("torus-canvas")) {
-        initTorus();   // from torus.js
-    }
-    if (document.getElementById("wavefield-canvas")) {
-        initWavefield();  // from wavefield.js
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+        if (document.getElementById("wavefield-canvas")) initWavefield();
+        if (document.getElementById("torus-canvas")) initTorus();
+    });
+
 
 });
