@@ -1,115 +1,1278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHRONOFORGE — Bhavyadhirr V. Bharadwaj</title>
+  <meta name="description" content="Quantum Computation · Neural Systems · Autonomous Intelligence Security" />
 
-    <title>CHRONOFORGE — Bhavyadhirr V. Bharadwaj</title>
-    <meta name="description" content="Quantum Computation · Neural Systems · Autonomous Intelligence Security" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
-        rel="stylesheet"
-    />
+  <style>
 
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/globals.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/theme.css" />
-    <link rel="stylesheet" href="css/components.css" />
-    <link rel="stylesheet" href="css/pages.css" />
+    /* ── Reset & Root ──────────────────────────────────────────── */
 
-    <!-- Black Hole Background CSS -->
-    <link rel="stylesheet" href="js/blackhole-bg/blackhole-bg.css" />
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    :root {
+      --black:        #000000;
+      --void:         #030305;
+      --surface:      #0a0a0f;
+      --surface-mid:  #0f0f18;
+      --border:       rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(255, 255, 255, 0.14);
+
+      --white:        #f0ede8;
+      --white-dim:    rgba(240, 237, 232, 0.55);
+      --white-faint:  rgba(240, 237, 232, 0.2);
+
+      --amber:        #e8a020;
+      --amber-dim:    rgba(232, 160, 32, 0.18);
+      --amber-faint:  rgba(232, 160, 32, 0.06);
+
+      --mono: 'IBM Plex Mono', 'Courier New', monospace;
+      --sans: 'IBM Plex Sans', system-ui, sans-serif;
+
+      --nav-h: 64px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--mono);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+
+    /* ── Film grain ────────────────────────────────────────────── */
+
+    .grain {
+      position: fixed;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: 5;
+      opacity: 0.032;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grain-drift 6s steps(8) infinite;
+    }
+
+    @keyframes grain-drift {
+      0%   { transform: translate(  0%,  0%); }
+      25%  { transform: translate( -2%, -3%); }
+      50%  { transform: translate(  3%,  1%); }
+      75%  { transform: translate( -1%,  4%); }
+      100% { transform: translate(  0%,  0%); }
+    }
+
+
+    /* ── Navigation ────────────────────────────────────────────── */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 4vw, 3.5rem);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s, background 0.4s, backdrop-filter 0.4s;
+    }
+
+    .nav.scrolled {
+      background: rgba(3, 3, 5, 0.82);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-color: var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .nav-logo:hover { opacity: 1; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--amber);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+    }
+
+    .nav-status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 6px var(--amber);
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1;   transform: scale(1);   }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-status { display: none; }
+    }
+
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    #bh-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* Bottom fade bleeding into next section */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent, var(--void));
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      animation: rise 1s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: clamp(3.6rem, 10vw, 9.5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 0.92;
+      color: var(--white);
+      text-shadow:
+        0 0 80px  rgba(232, 160, 32, 0.15),
+        0 0 160px rgba(128,  96, 208, 0.08);
+      opacity: 0;
+      animation: rise 1s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: clamp(0.75rem, 1.8vw, 1.05rem);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--white-dim);
+      margin-top: 1.4rem;
+      opacity: 0;
+      animation: rise 1s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      margin: 2rem auto;
+      opacity: 0;
+      animation: rise 1s 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.6rem, 1.2vw, 0.72rem);
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      opacity: 0;
+      animation: rise 1s 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 2.8rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: rise 1s 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.72rem 1.8rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--amber);
+      border: 1px solid var(--amber);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #f0b030;
+      box-shadow: 0 0 28px rgba(232, 160, 32, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.72rem 1.8rem;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      background: transparent;
+      border: 1px solid var(--border-hover);
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
+    }
+
+    /* Scroll hint */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      opacity: 0;
+      animation: rise 1s 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--white-faint), transparent);
+      animation: scroll-bob 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-bob {
+      0%, 100% { transform: scaleY(1);    opacity: 0.4; }
+      50%       { transform: scaleY(0.6); opacity: 0.8; }
+    }
+
+
+    /* ── Page sections ─────────────────────────────────────────── */
+
+    .page-section {
+      position: relative;
+      background: var(--void);
+      padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem);
+    }
+
+    .page-section + .page-section {
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: clamp(3rem, 6vh, 5rem);
+    }
+
+    .section-kicker {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 56ch;
+      line-height: 1.75;
+    }
+
+
+    /* ── Cards grid ────────────────────────────────────────────── */
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      padding: clamp(1.8rem, 4vw, 2.8rem);
+      background: var(--surface);
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--amber-dim), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover { background: var(--surface-mid); }
+    .card:hover::before { opacity: 1; }
+
+    .card-index {
+      font-size: 0.56rem;
+      letter-spacing: 0.3em;
+      color: var(--white-faint);
+    }
+
+    .card-title {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .card-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-top: 0.4rem;
+      transition: gap 0.2s;
+    }
+
+    .card:hover .card-arrow { gap: 0.85rem; }
+
+    .card-arrow-icon {
+      width: 20px;
+      height: 1px;
+      background: var(--amber);
+      position: relative;
+      transition: width 0.2s;
+    }
+
+    .card-arrow-icon::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 6px; height: 6px;
+      border-top: 1px solid var(--amber);
+      border-right: 1px solid var(--amber);
+      transform: rotate(45deg);
+    }
+
+    .card:hover .card-arrow-icon { width: 28px; }
+
+
+    /* ── About strip ───────────────────────────────────────────── */
+
+    .about-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: clamp(4rem, 8vh, 7rem) clamp(1.5rem, 6vw, 5rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 6rem);
+      align-items: start;
+    }
+
+    @media (max-width: 720px) { .about-strip { grid-template-columns: 1fr; } }
+
+    .about-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+    }
+
+    .about-heading {
+      font-family: var(--mono);
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      color: var(--white);
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.8rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      border: 1px solid var(--border-hover);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--amber-dim);
+      color: var(--amber);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stat-cell {
+      background: var(--surface-mid);
+      padding: 1.8rem 1.6rem;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stat-value sup {
+      color: var(--amber);
+      font-size: 0.45em;
+      font-weight: 400;
+    }
+
+    .stat-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      margin-top: 0.5rem;
+    }
+
+
+    /* ── Research list ─────────────────────────────────────────── */
+
+    .research-list {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+    }
+
+    .research-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.6rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      transition: background 0.2s;
+    }
+
+    .research-item:last-child { border-bottom: none; }
+    .research-item:hover { background: var(--surface-mid); }
+
+    .research-num {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--white-faint);
+      text-align: right;
+    }
+
+    .research-info { min-width: 0; }
+
+    .research-title {
+      font-family: var(--mono);
+      font-size: clamp(0.82rem, 1.4vw, 1rem);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .research-meta {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      margin-top: 0.3rem;
+    }
+
+    .research-badge {
+      font-size: 0.56rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.7rem;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .research-badge.active {
+      color: var(--amber);
+      border-color: var(--amber-dim);
+      background: var(--amber-faint);
+    }
+
+    .research-badge.published {
+      color: rgba(120, 200, 140, 0.85);
+      border-color: rgba(120, 200, 140, 0.2);
+      background: rgba(120, 200, 140, 0.04);
+    }
+
+    .research-badge.draft {
+      color: var(--white-faint);
+      border-color: var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .research-item { grid-template-columns: 40px 1fr; gap: 1rem; }
+      .research-badge { display: none; }
+    }
+
+
+    /* ── Footer ────────────────────────────────────────────────── */
+
+    .footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: clamp(3rem, 6vh, 5rem) clamp(1.5rem, 6vw, 5rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    @media (max-width: 600px) {
+      .footer { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: var(--white-faint);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      list-style: none;
+    }
+
+    @media (max-width: 600px) { .footer-links { justify-content: flex-start; } }
+
+    .footer-links a {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-faint);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white-dim); }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      color: var(--white-faint);
+    }
+
+    .footer-copy span { color: var(--amber); }
+
+    .footer-coords {
+      font-size: 0.56rem;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.12);
+    }
+
+
+    /* ── Scroll-reveal utility ─────────────────────────────────── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity   0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
 </head>
 <body>
 
-    <!-- ── Header ───────────────────────────────────────────── -->
-    <div id="header-placeholder"></div>
+  <!-- Film grain -->
+  <div class="grain" aria-hidden="true"></div>
 
 
-    <!-- ── Hero ─────────────────────────────────────────────── -->
-    <section class="hero">
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Nav                                                         -->
+  <!-- ─────────────────────────────────────────────────────────── -->
 
-        <!--
-            Black hole canvas — sits at z-index 0 inside .hero.
-            The .hero-content below must have position:relative; z-index:1+
-            in your pages.css / layout.css so it renders on top.
-        -->
-        <canvas id="bh-canvas" class="bh-canvas"></canvas>
-        <div class="bh-grain" aria-hidden="true"></div>
+  <nav class="nav" id="nav">
 
-        <div class="hero-content">
-            <h1 class="hero-title">CHRONOFORGE</h1>
-            <h2 class="hero-subtitle">Bhavyadhirr V. Bharadwaj</h2>
-            <p class="hero-tagline">
-                Quantum Computation · Neural Systems · Autonomous Intelligence Security
-            </p>
+    <a href="index.html" class="nav-logo">Chronoforge</a>
 
-            <div class="hero-cta">
-                <a href="research/index.html" class="btn-secondary">Research</a>
-                <a href="projects/index.html" class="btn-secondary">Projects</a>
-            </div>
+    <ul class="nav-links">
+      <li><a href="research/index.html">Research</a></li>
+      <li><a href="projects/index.html">Projects</a></li>
+      <li><a href="about/index.html">About</a></li>
+      <li><a href="media/index.html">Media</a></li>
+      <li><a href="contact/index.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-status">
+      <div class="nav-status-dot"></div>
+      Active Research
+    </div>
+
+  </nav>
+
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Hero                                                         -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <section class="hero">
+
+    <canvas id="bh-canvas"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Est. 2024 &nbsp;·&nbsp; Delhi, IN</div>
+      <h1 class="hero-title">CHRONOFORGE</h1>
+      <h2 class="hero-subtitle">Bhavyadhirr V. Bharadwaj</h2>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">
+        Quantum Computation &nbsp;·&nbsp; Neural Systems &nbsp;·&nbsp; Autonomous Intelligence Security
+      </p>
+      <div class="hero-cta">
+        <a href="research/index.html" class="btn-primary">Research &nbsp;→</a>
+        <a href="projects/index.html" class="btn-secondary">Projects</a>
+        <a href="about/index.html"    class="btn-secondary">About</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+
+  </section>
+
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Featured Work                                               -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <section class="page-section">
+
+    <div class="section-header reveal">
+      <div class="section-kicker">Selected Work</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">
+        Research at the intersection of post-classical computation, autonomous systems,
+        and the security architectures that will define their future.
+      </p>
+    </div>
+
+    <div class="cards-grid reveal">
+
+      <a href="research/mark-blu.html" class="card">
+        <div class="card-index">001</div>
+        <h3 class="card-title">MARK-B.L.U.</h3>
+        <p class="card-desc">
+          Quantum-secure architectural framework for AI and autonomous systems.
+          Boundary Layer Utility for post-classical threat environments.
+        </p>
+        <div class="card-arrow">
+          View Research <span class="card-arrow-icon"></span>
         </div>
+      </a>
 
-    </section>
-
-
-    <!-- ── Featured Work ─────────────────────────────────────── -->
-    <section class="section-padding featured">
-        <h2 class="section-title">Featured Work</h2>
-
-        <div class="cards-grid">
-
-            <a href="research/mark-blu.html" class="card">
-                <h3 class="card-title">MARK-B.L.U.</h3>
-                <p class="card-desc">
-                    Quantum-secure architectural framework for AI &amp; autonomous systems.
-                </p>
-            </a>
-
-            <a href="projects/index.html" class="card">
-                <h3 class="card-title">Quantum Security Engine</h3>
-                <p class="card-desc">
-                    Post-classical security mechanisms for agentic AI and autonomous infra.
-                </p>
-            </a>
-
-            <a href="media/index.html" class="card">
-                <h3 class="card-title">Podcast &amp; Media</h3>
-                <p class="card-desc">
-                    Conversations across quantum tech, AI security, neuroscience &amp; research culture.
-                </p>
-            </a>
-
+      <a href="projects/index.html" class="card">
+        <div class="card-index">002</div>
+        <h3 class="card-title">Quantum Security Engine</h3>
+        <p class="card-desc">
+          Post-classical security mechanisms engineered for agentic AI pipelines
+          and autonomous infrastructure at scale.
+        </p>
+        <div class="card-arrow">
+          View Projects <span class="card-arrow-icon"></span>
         </div>
-    </section>
+      </a>
+
+      <a href="media/index.html" class="card">
+        <div class="card-index">003</div>
+        <h3 class="card-title">Podcast &amp; Media</h3>
+        <p class="card-desc">
+          Conversations spanning quantum technology, AI security architecture,
+          neuroscience, and the culture of deep research.
+        </p>
+        <div class="card-arrow">
+          Listen &amp; Watch <span class="card-arrow-icon"></span>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
 
 
-    <!-- ── Footer ────────────────────────────────────────────── -->
-    <div id="footer-placeholder"></div>
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- About strip                                                  -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <div class="about-strip">
+
+    <div class="reveal">
+      <div class="about-label">Profile</div>
+      <h2 class="about-heading">
+        Forging at the edge of what computation can become.
+      </h2>
+      <div class="about-tags">
+        <span class="tag">Quantum Computing</span>
+        <span class="tag">Neural Systems</span>
+        <span class="tag">AI Security</span>
+        <span class="tag">Autonomous Infra</span>
+        <span class="tag">Post-Classical Crypto</span>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay: 0.12s;">
+      <div class="about-stats">
+        <div class="stat-cell">
+          <div class="stat-value">3<sup>+</sup></div>
+          <div class="stat-label">Research Tracks</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Problems Left</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value">01</div>
+          <div class="stat-label">Core Framework</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-value">24<sup>h</sup></div>
+          <div class="stat-label">Uptime</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 
-    <!-- ── Site JS (non-module, load first) ──────────────────── -->
-    <script src="js/utils.js"></script>
-    <script src="js/theme.js"></script>
-    <script src="js/palette.js"></script>
-    <script src="js/main.js"></script>
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Research threads                                            -->
+  <!-- ─────────────────────────────────────────────────────────── -->
 
-    <!-- Shaders (Three.js dependent — load after Three) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-    <script src="js/shaders/wavefield.js"></script>
-    <script src="js/shaders/torus.js"></script>
+  <section class="page-section">
 
-    <!-- ── Black Hole Background (ES module) ─────────────────── -->
-    <script type="module">
-        import { BlackHoleBG } from './js/blackhole-bg/blackhole-bg.js';
+    <div class="section-header reveal">
+      <div class="section-kicker">Research Log</div>
+      <h2 class="section-title">Current Threads</h2>
+    </div>
 
-        const bg = new BlackHoleBG('#bh-canvas');
-        bg.start();
-    </script>
+    <div class="research-list reveal">
+
+      <a href="research/mark-blu.html" class="research-item">
+        <div class="research-num">01</div>
+        <div class="research-info">
+          <div class="research-title">MARK-B.L.U. Architectural Framework</div>
+          <div class="research-meta">Quantum Security · Autonomous Systems</div>
+        </div>
+        <div class="research-badge active">Active</div>
+      </a>
+
+      <a href="research/index.html" class="research-item">
+        <div class="research-num">02</div>
+        <div class="research-info">
+          <div class="research-title">Post-Quantum Cryptography for Agentic AI</div>
+          <div class="research-meta">Cryptography · Neural Agents</div>
+        </div>
+        <div class="research-badge active">Active</div>
+      </a>
+
+      <a href="research/index.html" class="research-item">
+        <div class="research-num">03</div>
+        <div class="research-info">
+          <div class="research-title">Neural-Symbolic Reasoning Under Uncertainty</div>
+          <div class="research-meta">Neural Systems · Formal Methods</div>
+        </div>
+        <div class="research-badge draft">Draft</div>
+      </a>
+
+      <a href="research/index.html" class="research-item">
+        <div class="research-num">04</div>
+        <div class="research-info">
+          <div class="research-title">Threat Surface Modelling in Distributed AI Infra</div>
+          <div class="research-meta">Security · Distributed Systems</div>
+        </div>
+        <div class="research-badge draft">Draft</div>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Footer                                                      -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <footer class="footer">
+
+    <div>
+      <div class="footer-brand">Chronoforge</div>
+      <div class="footer-sub">Bhavyadhirr V. Bharadwaj</div>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="research/index.html">Research</a></li>
+      <li><a href="projects/index.html">Projects</a></li>
+      <li><a href="media/index.html">Media</a></li>
+      <li><a href="about/index.html">About</a></li>
+      <li><a href="contact/index.html">Contact</a></li>
+    </ul>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        &copy; 2025 Bhavyadhirr V. Bharadwaj &nbsp;·&nbsp; <span>Chronoforge</span>
+      </div>
+      <div class="footer-coords">28.6139° N, 77.2090° E</div>
+    </div>
+
+  </footer>
+
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Black hole canvas                                           -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <script>
+  (() => {
+    'use strict';
+
+    const canvas = document.getElementById('bh-canvas');
+    const ctx    = canvas.getContext('2d');
+
+    // ── Constants ──────────────────────────────────────────────
+    const PARTICLE_COUNT = 1800;
+    const ARC_COUNT      = 6;
+    const HOLE_R_FACTOR  = 0.095;
+    const FLATTEN        = 0.38;    // disk y-compression
+    const MOUSE_LAG      = 0.04;    // lerp factor
+    const MOUSE_PX       = 0.018;   // parallax intensity
+
+    // ── State ──────────────────────────────────────────────────
+    let W, H, cx, cy;
+    const mouse   = { x: 0, y: 0 };
+    let targetMX  = 0;
+    let targetMY  = 0;
+    let particles = [];
+    let arcs      = [];
+
+    // ── Resize ─────────────────────────────────────────────────
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      cx = W / 2;
+      cy = H / 2;
+      mouse.x = targetMX = cx;
+      mouse.y = targetMY = cy;
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────
+    function randomOrbit() {
+      const minR  = Math.min(W, H) * 0.08;
+      const maxR  = Math.min(W, H) * 0.85;
+      const r     = minR + Math.random() * (maxR - minR);
+      const angle = Math.random() * Math.PI * 2;
+      return { r, angle };
+    }
+
+    function particleColor(t) {
+      if (t < 0.25) {
+        const v = Math.floor(80 + t * 80);
+        return `rgba(${v},${v + 10},${v + 30},`;
+      }
+      if (t < 0.55) {
+        return `rgba(${Math.floor(80 + t * 120)},${Math.floor(40 + t * 60)},${Math.floor(160 + t * 80)},`;
+      }
+      if (t < 0.80) {
+        return `rgba(${Math.floor(200 + t * 55)},${Math.floor(100 + t * 80)},${Math.floor(20 + t * 40)},`;
+      }
+      const v = Math.floor(220 + t * 35);
+      return `rgba(${v},${Math.floor(v * 0.9)},${Math.floor(v * 0.75)},`;
+    }
+
+    // ── Spawn ───────────────────────────────────────────────────
+    function spawnParticles() {
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const { r, angle } = randomOrbit();
+        const t = 1 - r / (Math.min(W, H) * 0.85);
+        particles.push({
+          r,
+          angle,
+          speed:        (0.0004 + Math.random() * 0.0012) * (Math.random() < 0.5 ? 1 : -1),
+          life:         0.2 + Math.random() * 0.8,
+          size:         0.4 + Math.random() * 1.6 * (1 - t * 0.5),
+          color:        particleColor(t),
+          drift:        (Math.random() - 0.5) * 0.00008,
+          twinkle:      Math.random() * Math.PI * 2,
+          twinkleSpeed: 0.01 + Math.random() * 0.04,
+        });
+      }
+    }
+
+    function spawnArcs() {
+      arcs = Array.from({ length: ARC_COUNT }, (_, i) => ({
+        rFactor: 0.13 + i * 0.028,
+        width:   1.5  + Math.random() * 2.5,
+        alpha:   0.06 + Math.random() * 0.12,
+        speed:   (0.00025 + Math.random() * 0.0004) * (i % 2 === 0 ? 1 : -1),
+        angle:   Math.random() * Math.PI * 2,
+        gap:     Math.random() * Math.PI * 0.6 + 0.3,
+      }));
+    }
+
+    // ── Draw ────────────────────────────────────────────────────
+    function draw() {
+      // Smooth mouse towards target
+      mouse.x += (targetMX - mouse.x) * MOUSE_LAG;
+      mouse.y += (targetMY - mouse.y) * MOUSE_LAG;
+
+      const bx    = cx + (mouse.x - cx) * MOUSE_PX;
+      const by    = cy + (mouse.y - cy) * MOUSE_PX;
+      const holeR = Math.min(W, H) * HOLE_R_FACTOR;
+
+      // Clear
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, W, H);
+
+      // Deep-space glow
+      const sg = ctx.createRadialGradient(bx, by, holeR * 0.5, bx, by, Math.min(W, H) * 0.7);
+      sg.addColorStop(0,   'rgba(10,5,25,0)');
+      sg.addColorStop(0.4, 'rgba(8,4,20,0.5)');
+      sg.addColorStop(1,   'rgba(0,0,0,0.95)');
+      ctx.fillStyle = sg;
+      ctx.fillRect(0, 0, W, H);
+
+      // Particles
+      ctx.save();
+      for (const p of particles) {
+        p.angle  += p.speed;
+        p.r      += p.drift;
+        if (p.r < holeR * 0.6) {
+          const o = randomOrbit();
+          p.r = o.r;
+          p.angle = o.angle;
+        }
+        const px    = bx + Math.cos(p.angle) * p.r;
+        const py    = by + Math.sin(p.angle) * p.r * FLATTEN;
+        p.twinkle  += p.twinkleSpeed;
+        const alpha = p.life * (0.5 + 0.5 * Math.sin(p.twinkle));
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + alpha + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Accretion-disk arcs
+      ctx.save();
+      for (const arc of arcs) {
+        arc.angle += arc.speed;
+        const r  = Math.min(W, H) * arc.rFactor;
+        const ry = r * FLATTEN;
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.scale(1, ry / r);
+        ctx.beginPath();
+        ctx.arc(0, 0, r, arc.angle, arc.angle + Math.PI * 2 - arc.gap);
+        ctx.strokeStyle  = `rgba(200,130,60,${arc.alpha})`;
+        ctx.lineWidth    = arc.width;
+        ctx.shadowColor  = 'rgba(255,160,60,0.6)';
+        ctx.shadowBlur   = 12;
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+
+      // Lensing glow
+      const lg = ctx.createRadialGradient(bx, by, holeR * 0.85, bx, by, holeR * 2.2);
+      lg.addColorStop(0,    'rgba(255,200,100,0.18)');
+      lg.addColorStop(0.15, 'rgba(200,100,60,0.10)');
+      lg.addColorStop(0.4,  'rgba(80,40,120,0.06)');
+      lg.addColorStop(1,    'rgba(0,0,0,0)');
+      ctx.save();
+      ctx.translate(bx, by);
+      ctx.scale(1, FLATTEN);
+      ctx.beginPath();
+      ctx.arc(0, 0, holeR * 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = lg;
+      ctx.fill();
+      ctx.restore();
+
+      // Event horizon — outer halo
+      const eg = ctx.createRadialGradient(bx, by, holeR * 0.7, bx, by, holeR * 1.25);
+      eg.addColorStop(0,    'rgba(0,0,0,1)');
+      eg.addColorStop(0.7,  'rgba(0,0,0,1)');
+      eg.addColorStop(0.85, 'rgba(20,10,40,0.7)');
+      eg.addColorStop(1,    'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(bx, by, holeR * 1.25, 0, Math.PI * 2);
+      ctx.fillStyle = eg;
+      ctx.fill();
+
+      // Event horizon — absolute black core
+      ctx.beginPath();
+      ctx.arc(bx, by, holeR * 0.98, 0, Math.PI * 2);
+      ctx.fillStyle = '#000';
+      ctx.fill();
+
+      // Polar jets
+      for (const dir of [-1, 1]) {
+        const jg = ctx.createLinearGradient(bx, by, bx, by + dir * H * 0.55);
+        jg.addColorStop(0,   'rgba(120,80,255,0.12)');
+        jg.addColorStop(0.3, 'rgba(80,40,200,0.05)');
+        jg.addColorStop(1,   'rgba(0,0,0,0)');
+        const jw = holeR * 0.35;
+        const jh = H * 0.55;
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.beginPath();
+        ctx.moveTo(      0,           0);
+        ctx.lineTo(-jw * 0.1, dir * jh * 0.1);
+        ctx.lineTo(     -jw,  dir * jh);
+        ctx.lineTo(      jw,  dir * jh);
+        ctx.lineTo( jw * 0.1, dir * jh * 0.1);
+        ctx.closePath();
+        ctx.fillStyle = jg;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Edge vignette
+      const vg = ctx.createRadialGradient(cx, cy, Math.min(W, H) * 0.3, cx, cy, Math.min(W, H) * 0.85);
+      vg.addColorStop(0, 'rgba(0,0,0,0)');
+      vg.addColorStop(1, 'rgba(0,0,0,0.92)');
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, W, H);
+
+      requestAnimationFrame(draw);
+    }
+
+    // ── Init ────────────────────────────────────────────────────
+    resize();
+    spawnParticles();
+    spawnArcs();
+    requestAnimationFrame(draw);
+
+    window.addEventListener('resize',    resize,  { passive: true });
+    window.addEventListener('mousemove', e => { targetMX = e.clientX; targetMY = e.clientY; }, { passive: true });
+
+  })();
+  </script>
+
+
+  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- Nav scroll / reveal behaviours                              -->
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <script>
+    // Nav frosted glass on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll-reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => io.observe(el));
+  </script>
 
 </body>
 </html>
