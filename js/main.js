@@ -30,6 +30,8 @@ function renderHero() {
 
   const linksWrap = document.getElementById("hero-links");
   const links = [
+    { label: "YouTube", href: "https://youtube.com/@GenesisofTomorrow/" }
+    { label: "LinkedIn", href: "https://linkedin.com/in/Bhavyadhirr/" }
     { label: "GitHub", href: SITE.github },
     { label: "Email", href: `mailto:${SITE.email}` }
   ];
@@ -144,7 +146,8 @@ function renderContact() {
   const rows = [
     { label: "Email", value: SITE.email, href: `mailto:${SITE.email}` },
     { label: "GitHub", value: SITE.github.replace("https://", ""), href: SITE.github },
-    { label: "Location", value: SITE.location, href: "" }
+    { label: "YouTube", href: "https://youtube.com/@GenesisofTomorrow/" }
+    { label: "LinkedIn", href: "https://linkedin.com/in/Bhavyadhirr/" }
   ];
   rows.forEach(r => {
     if (!r.value) return;
