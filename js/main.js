@@ -146,8 +146,8 @@ function renderContact() {
   const rows = [
     { label: "Email", value: SITE.email, href: `mailto:${SITE.email}` },
     { label: "GitHub", value: SITE.github.replace("https://", ""), href: SITE.github },
-    { label: "YouTube", href: "https://youtube.com/@GenesisofTomorrow/" }
-    { label: "LinkedIn", href: "https://linkedin.com/in/Bhavyadhirr/" }
+    { label: "YouTube", value: href: "https://youtube.com/@GenesisofTomorrow/" }
+    { label: "LinkedIn", value: href: "https://linkedin.com/in/Bhavyadhirr/" }
   ];
   rows.forEach(r => {
     if (!r.value) return;
