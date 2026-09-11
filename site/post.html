@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="doc-title">Writing — CHRONOFORGE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">CHRONOFORGE</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="writing.html" class="active">Writing</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <a class="back-link" href="writing.html">← All writing</a>
+  <article id="post-root"><!-- filled by inline script below --></article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="copy">© <span data-year></span> Bhavyadhirr V. Bharadwaj</span>
+    <nav>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="talks.html">Talks</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/lists.js"></script>
+<script>
+  function renderNotFound(root) {
+    root.appendChild(el("div", { class: "post-header" }, [el("h1", { text: "Post not found" })]));
+    root.appendChild(el("div", { class: "post-body" }, [
+      el("p", { text: "This post may have been moved or removed. Head back to the writing index to see what's available." })
+    ]));
+  }
+
+  function renderPost() {
+    const root = document.getElementById("post-root");
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
+    const index = posts.findIndex(p => p.slug === slug);
+
+    if (index === -1) {
+      renderNotFound(root);
+      return;
+    }
+
+    const post = posts[index];
+    document.getElementById("doc-title").textContent = `${post.title} — CHRONOFORGE`;
+
+    const tags = el("div", { class: "entry-tags" });
+    (post.tags || []).forEach(t => tags.appendChild(el("span", { class: "entry-tag", text: t })));
+
+    root.appendChild(
+      el("div", { class: "post-header" }, [
+        el("h1", { text: post.title }),
+        el("div", { class: "post-meta-row" }, [
+          el("time", { text: formatDate(post.date) }),
+          tags
+        ])
+      ])
+    );
+
+    root.appendChild(el("div", { class: "post-body", html: post.content }));
+
+    const prev = posts[index + 1]; // older
+    const next = posts[index - 1]; // newer
+    const footerNav = el("div", { class: "post-footer" });
+    footerNav.appendChild(prev ? el("a", { href: `post.html?slug=${prev.slug}`, text: `← ${prev.title}` }) : el("span"));
+    footerNav.appendChild(next ? el("a", { href: `post.html?slug=${next.slug}`, text: `${next.title} →` }) : el("span"));
+    root.appendChild(footerNav);
+  }
+
+  renderPost();
+</script>
+<script src="js/common.js"></script>
+</body>
+</html>

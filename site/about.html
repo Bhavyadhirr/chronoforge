@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHRONOFORGE — Bhavyadhirr V. Bharadwaj</title>
-<meta name="description" content="Research engineer working on quantum-secure systems, autonomous AI infrastructure, and post-quantum cryptography.">
+<title>About — CHRONOFORGE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600&display=swap" rel="stylesheet">
@@ -12,29 +11,30 @@
 </head>
 <body>
 
-<nav id="site-nav" class="on-hero">
+<nav id="site-nav">
   <div class="nav-inner">
     <a class="nav-brand" href="index.html">CHRONOFORGE</a>
     <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
       <a href="writing.html">Writing</a>
     </div>
   </div>
 </nav>
 
-<div class="hero">
-  <div class="hero-actions">
-    <a class="hero-btn" href="about.html">About</a>
-    <a class="hero-btn" href="writing.html">Writing</a>
+<main class="wrap">
+  <div class="page-head">
+    <div class="page-eyebrow">Not the who, but the why</div>
+    <h1>About</h1>
   </div>
-</div>
+
+  <div class="about-body" id="about-body"></div>
+</main>
 
 <footer>
   <div class="wrap">
     <span class="copy">© <span data-year></span> Bhavyadhirr V. Bharadwaj</span>
     <nav>
-      <a href="about.html">About</a>
       <a href="research.html">Research</a>
       <a href="projects.html">Projects</a>
       <a href="talks.html">Talks</a>
@@ -44,6 +44,14 @@
 </footer>
 
 <script src="js/data.js"></script>
+<script>
+  const aboutRoot = document.getElementById("about-body");
+  aboutParagraphs.forEach(function (paragraph) {
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    aboutRoot.appendChild(p);
+  });
+</script>
 <script src="js/common.js"></script>
 </body>
 </html>

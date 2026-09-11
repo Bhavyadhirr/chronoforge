@@ -2,55 +2,57 @@
   =========================================================================
   SITE CONTENT
   =========================================================================
-  This is the only file you need to edit to update the site.
+  This is the only file you should need to edit to update the site.
 
-  - To add a PUBLICATION: add an object to the `publications` array.
-  - To add a PROJECT: add an object to the `projects` array.
-  - To add a BLOG POST / ARTICLE: add an object to the `posts` array.
-    Write the body as plain HTML in the `content` field (use <p>, <h3>,
-    <ul>, <li>, <blockquote>, <pre><code> etc). Give it a unique `slug` —
-    that's the id used in the URL (post.html?slug=your-slug).
+  - SITE: name, role, links, home banner image path.
+  - aboutParagraphs: the About page copy, one string per paragraph.
+  - researchPapers: add an object to publish a new paper.
+  - projects: add an object to publish a new project.
+  - talks: add an object to publish a new talk.
+  - posts: add an object to publish a new blog post. Write `content` as
+    plain HTML (<p>, <h3>, <ul><li>, <strong>, <code> all work). Give it
+    a unique `slug` — that's the id used in the URL (post.html?slug=...).
 
   Nothing elsewhere in the codebase needs to change when you add content.
   =========================================================================
 */
 
 const SITE = {
+  brand: "CHRONOFORGE",
   name: "Bhavyadhirr V. Bharadwaj",
   role: "Research Engineer",
-  focus: "Quantum-secure systems, autonomous AI infrastructure, and post-classical cryptography.",
   location: "Delhi, India",
+  focus: "Quantum-secure systems, autonomous AI infrastructure, and post-classical cryptography.",
   email: "hello@example.com",
   github: "https://github.com/bhavyadhirr",
+  youtube: "https://youtube.com/@GenesisofTomorrow/",
+  linkedin: "https://linkedin.com/in/Bhavyadhirr/",
   scholar: "",
   cvUrl: "",
-  intro: [
-    "I work on the security and architecture of autonomous AI systems, with a focus on what happens when classical cryptographic assumptions stop holding — quantum-capable adversaries, machine-speed trust negotiation, and infrastructure that has to defend itself without a human in the loop.",
-    "My current work centers on MARK-B.L.U., a quantum-secure architectural framework for autonomous systems, alongside research on post-quantum cryptography for agentic pipelines and threat modelling for distributed AI infrastructure."
-  ]
+  heroImage: "assets/banner.png"
 };
 
-const researchAreas = [
-  {
-    title: "Quantum-Secure Systems",
-    description: "Architectures and cryptographic primitives that remain sound against adversaries with quantum computational capability."
-  },
-  {
-    title: "Autonomous AI Infrastructure",
-    description: "Security, memory, and trust models for AI agents and multi-agent pipelines operating with limited human oversight."
-  },
-  {
-    title: "Post-Quantum Cryptography",
-    description: "Lattice- and hash-based cryptographic schemes adapted for high-churn, machine-speed operational environments."
-  }
+/* ---------------------------------------------------------------------
+   ABOUT
+--------------------------------------------------------------------- */
+const aboutParagraphs = [
+  "I do all that I do because of the 'inkling'.",
+  "I've had the predisposition, and have further refined it, to approach technology, science, research, and innovation, with not a barometer for how good I am at it, but how inclined I am to it.",
+  "The reason why most of my work right now sits at the intersection of quantum computation, artificial intelligence, governance-first system design, autonomous security, and physical AI (robotics), is because I'm guided by an inkling that has a lot to do with wanting to fathom how the mind works — natural or artificial; how intelligence emerges, behaves, and should be constrained or optimized.",
+  "Much of my focus right now converges on security and robustness in intelligent systems with a growing degree of autonomy and uncertainty. Such applicative areas generally contextualise themselves where failure is extremely costly and ambiguity is often unavoidable.",
+  "That marks cryptographic architectures, cognitive modelling, and decision-vectors. I have come to notice that I'm especially drawn towards the areas that pertain to crafting governance for the double-edged nature of this work.",
+  "A core priority of my philosophy has also emerged out to be the alignment of synthetic advancement with human embrace. I'm less interested in maximal performance than in understanding why a system behaves as it does, and how that behavior scales under what I call the \"uncertainty factor\" of life and living.",
+  "At a more personal level, I value practices that cultivate patience and tranquility — music, writing, and martial arts, being the staples. I firmly believe such 'outside' endeavors become modes of engagement with one's relationship to adaptability, timing, optimization under constraint, and unyielding grit.",
+  "That's quite a rhetoric, but quite earnestly, this portfolio isn't intended to be a catalogue of finished products or undying success — more like a reflective dossier spanning time itself. Ideas and work presented here are exploratory by design. One needs to award oneself the freedom to articulate incomplete thought, unpolished assumptions, cognitive revisions.",
+  "And yeah, that's pretty much it. Cheers!"
 ];
 
 /* ---------------------------------------------------------------------
-   PUBLICATIONS
+   RESEARCH PAPERS
    Add new entries at the top. `link` is optional — omit it (or leave
    as an empty string) if there's nothing to link to yet.
 --------------------------------------------------------------------- */
-const publications = [
+const researchPapers = [
   {
     title: "MARK-B.L.U.: A Boundary Layer Utility for Quantum-Secure Autonomous Systems",
     venue: "Springer Nature — Working Paper",
@@ -97,6 +99,21 @@ const projects = [
     description: "An isolated environment for testing multi-agent orchestration and adversarial agent behaviour, with a runtime policy checker for verifying agent state transitions against declared safety specifications.",
     link: ""
   }
+];
+
+/* ---------------------------------------------------------------------
+   TALKS
+   Add new entries at the top. Leave `link` empty if there's no
+   recording or slides to point to yet.
+--------------------------------------------------------------------- */
+const talks = [
+  // {
+  //   title: "Post-Quantum Trust for Agentic Pipelines",
+  //   event: "Example Conference",
+  //   year: "2026",
+  //   description: "A short description of what the talk covered.",
+  //   link: ""
+  // }
 ];
 
 /* ---------------------------------------------------------------------
