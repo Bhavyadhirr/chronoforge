@@ -181,31 +181,22 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
   color: var(--gold);
 }
 
-/* Narrow / phone screens: uncropped, natural-height banner */
+/* Narrow / phone screens: still a full first-page hero, just a touch
+   shorter than the desktop 100vh so it doesn't crop the artwork as
+   aggressively on a tall, narrow frame. Buttons stay overlaid on it. */
 @media (max-width: 700px) {
   .hero {
-    min-height: 0;
-    height: auto;
-    display: block;
+    min-height: 92vh;
+    min-height: 92svh;
   }
   .hero-img {
-    position: static;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-  .hero::after {
-    /* only a thin fade at the very bottom edge of the image itself */
-    top: auto;
-    height: 90px;
-    background: linear-gradient(to top, rgba(10, 9, 10, 0.85), rgba(10, 9, 10, 0));
+    object-fit: cover;
+    object-position: center;
   }
   .hero-actions {
-    position: static;
+    padding: 0 var(--s3) var(--s4);
     justify-content: center;
     flex-wrap: wrap;
-    padding: var(--s3);
-    background: var(--bg);
   }
 }
 
