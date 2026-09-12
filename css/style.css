@@ -40,6 +40,7 @@ body {
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -124,20 +125,32 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
 
 /* =========================================================================
    HOME / HERO
+   Uses a real <img> with object-fit so it scales correctly on any
+   screen size / aspect ratio, instead of a CSS background-image.
 ========================================================================= */
 .hero {
   position: relative;
+  width: 100%;
+  min-height: 100vh;
   min-height: 100svh;
+  overflow: hidden;
   display: flex;
   align-items: flex-end;
-  background-image: url("../assets/banner.png");
-  background-size: cover;
-  background-position: center;
+}
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
 }
 .hero::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(to top, rgba(10, 9, 10, 0.7) 0%, rgba(10, 9, 10, 0) 42%);
   pointer-events: none;
 }
@@ -167,6 +180,18 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
 
 @media (max-width: 620px) {
   .hero-actions { justify-content: center; padding: 0 var(--s3) var(--s4); flex-wrap: wrap; }
+}
+
+/* =========================================================================
+   HOME — PINNED SECTION  (research / projects / talks shortcuts)
+========================================================================= */
+.home-pinned {
+  padding: var(--s5) 0 var(--s6);
+}
+.home-pinned .section-label {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-bottom: var(--s3);
 }
 
 /* =========================================================================
@@ -208,7 +233,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
 .about-body p + p { margin-top: var(--s3); }
 
 /* =========================================================================
-   PINNED  (writing page: research / projects / talks shortcuts)
+   PINNED CARDS  (shared grid used on the home page)
 ========================================================================= */
 .pinned-grid {
   display: grid;
@@ -216,7 +241,6 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
-  margin-bottom: var(--s5);
 }
 .pinned-card {
   background: var(--bg);
