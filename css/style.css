@@ -193,23 +193,26 @@ footer nav a:hover { color: var(--gold); }
 ========================================================================= */
 @media (max-width: 700px) {
   .hero {
-    min-height: 46vh;
-    min-height: 46svh;
-    display: flex;
-    align-items: flex-end;
+    min-height: 0;
+    height: auto;
+    display: block;
+    background: var(--bg);
   }
   .hero-img {
-    position: absolute !important;
-    inset: 0;
+    position: static !important;
     width: 100%;
-    height: 100%;
-    object-fit: cover !important;
-    object-position: center 30%;
+    height: auto !important;
+    object-fit: contain !important;
+    max-width: none;
+  }
+  .hero::after {
+    display: none;
   }
   .hero-actions {
-    position: relative;
-    padding: 0 var(--s3) var(--s3);
+    position: static;
+    padding: var(--s3) var(--s3) var(--s4);
     justify-content: center;
     flex-wrap: wrap;
+    background: var(--bg);
   }
 }
