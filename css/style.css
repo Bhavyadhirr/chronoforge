@@ -481,14 +481,6 @@ footer nav a:hover { color: var(--gold); }
    RESPONSIVE
 ========================================================================= */
 @media (max-width: 620px) {
-  :root { --gutter: 20px; }
-  .nav-links { gap: var(--s2); }
-  .page-head h1 { font-size: 26px; }
-  .entry-top { flex-direction: column; gap: 4px; align-items: flex-start; }
-  footer .wrap { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 620px) {
   .nav-brand { display: none; }
   .nav-links {
     gap: 14px;
