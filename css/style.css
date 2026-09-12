@@ -94,6 +94,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--gold);
+  flex-shrink: 0;
 }
 .nav-links {
   display: flex;
@@ -104,6 +105,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
   color: var(--ink-muted);
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
+  white-space: nowrap;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .nav-links a:hover { color: var(--ink); }
@@ -123,13 +125,24 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
 #site-nav.on-hero .nav-links a:hover { color: #fff; }
 #site-nav.on-hero .nav-links a.active { color: var(--gold); }
 
+/* six links on a narrow phone screen: hide the wordmark, let links
+   scroll horizontally in one row instead of wrapping */
+@media (max-width: 620px) {
+  .nav-brand { display: none; }
+  .nav-links {
+    gap: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+}
+
 /* =========================================================================
    HOME / HERO
-   Desktop/tablet: the banner fills the full viewport, cropped with
-   object-fit: cover. On narrow phone screens, cropping a wide banner to
-   a tall narrow frame zooms in badly and cuts off the artwork/text — so
-   below the breakpoint the image instead lays out at full width with
-   its natural height (no crop), and the buttons move below it.
+   Uses a real <img> with object-fit: cover so the banner scales and
+   crops correctly at any screen size, including phones — it stays a
+   full first-page hero on every breakpoint, not just desktop.
 ========================================================================= */
 .hero {
   position: relative;
@@ -181,22 +194,13 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
   color: var(--gold);
 }
 
-/* Narrow / phone screens: still a full first-page hero, just a touch
-   shorter than the desktop 100vh so it doesn't crop the artwork as
-   aggressively on a tall, narrow frame. Buttons stay overlaid on it. */
+/* phones: same full-screen cover-crop hero, buttons centered and a
+   touch closer to the edge so they sit comfortably on a narrow frame */
 @media (max-width: 700px) {
-  .hero {
-    min-height: 92vh;
-    min-height: 92svh;
-  }
-  .hero-img {
-    object-fit: cover;
-    object-position: center;
-  }
   .hero-actions {
-    padding: 0 var(--s3) var(--s4);
     justify-content: center;
     flex-wrap: wrap;
+    padding: 0 var(--s3) var(--s4);
   }
 }
 
@@ -472,12 +476,8 @@ footer nav a:hover { color: var(--gold); }
    RESPONSIVE
 ========================================================================= */
 @media (max-width: 620px) {
-  .nav-brand { display: none; }
-  .nav-links {
-    gap: 14px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
+  :root { --gutter: 20px; }
+  .page-head h1 { font-size: 26px; }
+  .entry-top { flex-direction: column; gap: 4px; align-items: flex-start; }
+  footer .wrap { flex-direction: column; align-items: flex-start; }
 }
