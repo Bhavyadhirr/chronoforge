@@ -195,24 +195,35 @@ footer nav a:hover { color: var(--gold); }
   .hero {
     min-height: 0;
     height: auto;
-    display: block;
-    background: var(--bg);
+    aspect-ratio: 9 / 8; /* zoomed just enough to keep the full CHRONOFORGE title in frame */
+    display: flex;
+    align-items: flex-end;
   }
   .hero-img {
-    position: static !important;
+    position: absolute !important;
+    inset: 0;
     width: 100%;
-    height: auto !important;
-    object-fit: contain !important;
-    max-width: none;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center;
   }
   .hero::after {
-    display: none;
+    display: block;
+    background: linear-gradient(to top, rgba(10,9,10,0.8) 0%, rgba(10,9,10,0) 55%);
   }
   .hero-actions {
-    position: static;
-    padding: var(--s3) var(--s3) var(--s4);
+    position: relative;
+    z-index: 2;
+    padding: 0 var(--s3) var(--s3);
     justify-content: center;
+    gap: 10px;
     flex-wrap: wrap;
-    background: var(--bg);
+  }
+  .hero-btn {
+    font-size: 12.5px;
+    padding: 8px 16px;
+  }
+  .home-pinned {
+    padding-top: var(--s4);
   }
 }
