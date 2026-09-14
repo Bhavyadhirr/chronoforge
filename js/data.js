@@ -36,7 +36,7 @@ const SITE = {
    ABOUT
 --------------------------------------------------------------------- */
 const aboutParagraphs = [
-  "I do all that I do because of the 'inkling'.",
+  "I do all that I do because of the 'inkling'. It marks a seminal part of my decision making.",
   "I've had the predisposition, and have further refined it, to approach technology, science, research, and innovation, with not a barometer for how good I am at it, but how inclined I am to it.",
   "The reason why most of my work right now sits at the intersection of quantum computation, artificial intelligence, governance-first system design, autonomous security, and physical AI (robotics), is because I'm guided by an inkling that has a lot to do with wanting to fathom how the mind works — natural or artificial; how intelligence emerges, behaves, and should be constrained or optimized.",
   "Much of my focus right now converges on security and robustness in intelligent systems with a growing degree of autonomy and uncertainty. Such applicative areas generally contextualise themselves where failure is extremely costly and ambiguity is often unavoidable.",
